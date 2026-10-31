@@ -6,6 +6,6 @@
   "scripts": {
     "dev": "python3 -m http.server 4187 --bind 127.0.0.1",
     "test": "node --test",
-    "check": "node --check src/recipes.js && node --test"
+    "check": "node --check src/app.js && node --check src/recipes.js && node --test"
   }
 }
