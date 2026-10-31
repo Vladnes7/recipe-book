@@ -1,3 +1,4 @@
+import { prepareRecipeTitle, updateReadingProgress } from "./motion.js";
 import {
   categories,
   filterRecipes,
@@ -40,7 +41,6 @@ const escape = (value) =>
 const icon = (name, className = "") => {
   const paths = {
     arrow: '<path d="M4 12h16M13 5l7 7-7 7"/>',
-    diagonal: '<path d="M6 18 18 6M6 6h12v12"/>',
     down: '<path d="M12 4v16M5 13l7 7 7-7"/>',
     heart:
       '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
@@ -67,7 +67,7 @@ function header(detail = false) {
       <a href="#philosophy" data-scroll="philosophy">Немного Италии</a>
     </nav>
     <div class="nav-actions"><button class="nav-saved" data-scroll="toc" data-category="favorites" aria-label="Избранные рецепты">${icon("heart")}<span class="saved-count">${favorites.size || ""}</span></button>
-    <a class="nav-cta" href="#toc" data-scroll="toc" data-category="all">К рецептам ${icon("diagonal")}</a></div>
+    <a class="nav-cta" href="#toc" data-scroll="toc" data-category="all">К рецептам </a></div>
   </header>`;
 }
 
@@ -88,7 +88,7 @@ function renderHome() {
         <h1 id="hero-title" class="hero-title" lang="it">La dolce vita</h1>
         <p class="hero-subtitle">Готовить с любовью.<br>Жить со вкусом.</p>
         <p class="hero-description">Любимые рецепты, простые ингредиенты<br class="desktop-break"> и немного Италии в каждом дне.</p>
-        <a class="button button--cream" href="#toc" data-scroll="toc" data-category="all">Открыть книгу рецептов ${icon("arrow")}</a>
+        <a class="button button--cream" href="#toc" data-scroll="toc" data-category="all">Открыть книгу рецептов</a>
       </div>
       <div class="hero-bottom"><a class="scroll-cue" href="#toc" data-scroll="toc">${icon("down")}<span>Листайте. Вдохновляйтесь. Готовьте.</span></a>
         <p class="location"><span class="location-dot"></span> LAGO DI COMO, ITALIA <span>45°59′ N · 9°15′ E</span></p></div>
@@ -119,11 +119,12 @@ function favoriteButton(recipe, extraClass = "") {
 
 function card(recipe, index) {
   const variant = recipe.variants[0];
-  return `<article class="recipe-card reveal" style="--delay:${(index % 3) * 65}ms">
-    <div class="card-media"><a href="${href(recipe)}" tabindex="-1" aria-hidden="true">${image(coverPhoto(recipe, variant, photos), recipe.title, `loading="lazy" width="600" height="750" style="object-position:${escape(variant.focus || "center")}"`)}</a>
+  const tone = ["blue", "aqua", "sand"][recipes.indexOf(recipe) % 3];
+  return `<article class="recipe-card recipe-card--${tone} reveal" style="--delay:${(index % 3) * 65}ms">
+    <div class="card-media">${image(coverPhoto(recipe, variant, photos), recipe.title, `loading="lazy" width="600" height="750" style="object-position:${escape(variant.focus || "center")}"`)}
       <span class="card-number">${String(recipes.indexOf(recipe) + 1).padStart(2, "0")}</span>${favoriteButton(recipe)}</div>
     <div class="card-content"><p class="card-category">${escape(recipe.category)}</p><h3><a href="${href(recipe)}">${escape(recipe.title)}</a></h3><p class="card-tagline">${escape(recipe.tagline)}</p>
-      <div class="card-bottom"><span>${icon("clock")}${escape(variant.time)}</span><a class="card-arrow" href="${href(recipe)}" aria-label="Открыть рецепт: ${escape(recipe.title)}">${icon("diagonal")}</a></div>
+      <div class="card-bottom"><span>${icon("clock")}${escape(variant.time)}</span><span class="card-servings">${escape(variant.servings)}</span></div>
     </div></article>`;
 }
 
@@ -136,7 +137,7 @@ function updateGrid() {
   );
   grid.innerHTML = filtered.length
     ? filtered.map(card).join("")
-    : `<div class="empty-state">${icon(category === "favorites" ? "heart" : "search")}<h3>${category === "favorites" && !search ? "Здесь будут ваши любимые рецепты" : "Пока ничего не нашлось"}</h3><p>${category === "favorites" && !search ? "Нажмите на сердечко у блюда, чтобы сохранить его в свою коллекцию." : "Попробуйте другой ингредиент или откройте всю коллекцию."}</p><button class="button" data-reset>Все рецепты ${icon("arrow")}</button></div>`;
+    : `<div class="empty-state">${icon(category === "favorites" ? "heart" : "search")}<h3>${category === "favorites" && !search ? "Здесь будут ваши любимые рецепты" : "Пока ничего не нашлось"}</h3><p>${category === "favorites" && !search ? "Нажмите на сердечко у блюда, чтобы сохранить его в свою коллекцию." : "Попробуйте другой ингредиент или откройте всю коллекцию."}</p><button class="button" data-reset>Все рецепты</button></div>`;
   document.querySelectorAll("[data-filter]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.filter === category);
     button.setAttribute(
@@ -157,7 +158,7 @@ function renderRecipe(recipe, variantId) {
   const checked = ingredientChecks.get(checkKey) || new Set();
   document.body.classList.add("detail-page");
   document.title = `${recipe.title} — La cucina`;
-  app.innerHTML = `${header(true)}<main id="main" tabindex="-1">
+  app.innerHTML = `${header(true)}<main id="main" class="recipe-page" tabindex="-1"><div class="reading-progress" aria-hidden="true"><span></span></div>
     <div class="breadcrumbs section-wrap"><a href="#/recipes">Книга рецептов</a><span>/</span><span>${escape(recipe.category)}</span></div>
     <section class="recipe-hero section-wrap"><div class="recipe-cover">${image(coverPhoto(recipe, variant, photos), recipe.title, `fetchpriority="high" width="800" height="900" style="object-position:${escape(variant.focus || "center")}"`)}<span class="cover-caption" lang="it">Cucinare con amore</span></div>
       <div class="recipe-heading"><p class="eyebrow">RICETTA ${String(recipes.indexOf(recipe) + 1).padStart(2, "0")} · ${escape(recipe.category)}</p><h1>${escape(recipe.title)}</h1><p class="recipe-tagline">${escape(recipe.tagline)}</p><div class="recipe-facts"><span>${icon("clock")}${escape(variant.time)}</span><span>${icon("people")}${escape(variant.servings)}</span></div>
@@ -166,7 +167,7 @@ function renderRecipe(recipe, variantId) {
       ${nutrition ? `<div class="nutrition"><p>НА ${escape(nutrition.per || "порцию")}</p><div><span><b>${escape(nutrition.kcal)}</b>ккал</span><span><b>${escape(nutrition.protein)} г</b>белки</span><span><b>${escape(nutrition.fat)} г</b>жиры</span><span><b>${escape(nutrition.carbs)} г</b>углеводы</span></div></div>` : ""}</div>
     </section>
     <section class="recipe-body section-wrap"><aside class="ingredients"><div class="ingredients-sticky"><p class="eyebrow">01 · INGREDIENTI</p><h2>Что понадобится</h2><p class="ingredients-hint">Отмечайте то, что уже приготовили</p><ul>${variant.ingredients.map((item, i) => `<li><label class="ingredient ${checked.has(i) ? "is-checked" : ""}"><input type="checkbox" data-ingredient="${i}" data-check-key="${checkKey}" ${checked.has(i) ? "checked" : ""}><span class="ingredient-name">${escape(item.name)}</span><span class="ingredient-amount">${escape(item.amount)}</span></label></li>`).join("")}</ul>
-    ${variant.source?.url ? `<a class="source-link" href="${escape(variant.source.url)}" target="_blank" rel="noopener noreferrer">Источник: ${escape(variant.source.site)} ${icon("diagonal")}</a>` : variant.source ? `<p class="source-link">Источник: ${escape(variant.source.site)}</p>` : ""}</div></aside>
+    ${variant.source?.url ? `<a class="source-link" href="${escape(variant.source.url)}" target="_blank" rel="noopener noreferrer">Источник: ${escape(variant.source.site)} </a>` : variant.source ? `<p class="source-link">Источник: ${escape(variant.source.site)}</p>` : ""}</div></aside>
     <div class="method"><p class="eyebrow">02 · PREPARAZIONE</p><h2>Готовим с удовольствием</h2><ol class="steps">${variant.steps.map((step, i) => `<li class="step reveal"><span class="step-number">${String(i + 1).padStart(2, "0")}</span><div>${step.title ? `<h3>${escape(step.title)}</h3>` : ""}<p>${escape(step.text)}</p>${photos[recipe.slug]?.[variant.id]?.[i + 1] ? `<figure>${image(photos[recipe.slug][variant.id][i + 1], `${recipe.title}, шаг ${i + 1}`, 'loading="lazy" width="800" height="600"')}<figcaption>ШАГ ${String(i + 1).padStart(2, "0")}</figcaption></figure>` : ""}</div></li>`).join("")}</ol>
     ${variant.tips.length ? `<div class="recipe-tips reveal"><p class="eyebrow">PICCOLI SEGRETI · НА ЗАМЕТКУ</p>${variant.tips.map((tip) => `<h3>${escape(tip.title)}</h3><p>${escape(tip.text)}</p>`).join("")}</div>` : ""}
     ${recipe.cutting.length ? `<details class="cutting-notes"><summary>Заметки для сушки <span>+</span></summary><ul>${recipe.cutting.map((note) => `<li>${escape(note)}</li>`).join("")}</ul><p>Личные заметки; в оригинальных рецептах их нет.</p></details>` : ""}
@@ -185,8 +186,12 @@ function renderRecipe(recipe, variantId) {
         : ""
     }
     <p class="method-signoff script" lang="it">Buon appetito!</p></div></section>
-    <a class="next-recipe" href="${href(next)}"><div><p class="eyebrow">СЛЕДУЮЩАЯ СТРАНИЦА КНИГИ</p><h2>${escape(next.title)}</h2><span>Открыть рецепт ${icon("arrow")}</span></div>${image(coverPhoto(next, next.variants[0], photos), "", 'loading="lazy" width="600" height="500"')}</a>
+    <a class="next-recipe" href="${href(next)}"><div><p class="eyebrow">СЛЕДУЮЩАЯ СТРАНИЦА КНИГИ</p><h2>${escape(next.title)}</h2><span>Открыть рецепт</span></div>${image(coverPhoto(next, next.variants[0], photos), "", 'loading="lazy" width="600" height="500"')}</a>
   </main>${footer()}`;
+  prepareRecipeTitle(
+    document.querySelector(".recipe-heading h1"),
+    reducedMotion,
+  );
   reveal();
   updateHeader();
 }
@@ -221,7 +226,7 @@ function route({ scroll = true } = {}) {
     else {
       document.body.classList.add("detail-page");
       document.title = "Рецепт не найден — La cucina";
-      app.innerHTML = `${header(true)}<main id="main" class="not-found" tabindex="-1"><span class="script" lang="it">Mamma mia!</span><h1>Такой страницы пока нет в книге</h1><a class="button" href="#/recipes">Вернуться к рецептам ${icon("arrow")}</a></main>${footer()}`;
+      app.innerHTML = `${header(true)}<main id="main" class="not-found" tabindex="-1"><span class="script" lang="it">Mamma mia!</span><h1>Такой страницы пока нет в книге</h1><a class="button" href="#/recipes">Вернуться к рецептам</a></main>${footer()}`;
     }
   }
   if (scroll) {
@@ -234,6 +239,7 @@ function updateHeader() {
   document
     .querySelector(".site-header")
     ?.classList.toggle("is-scrolled", scrollY > 50);
+  updateReadingProgress();
 }
 
 function showToast(message) {
