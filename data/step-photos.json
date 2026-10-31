@@ -1,0 +1,115 @@
+{
+  "chia-pudding": {
+    "recept": {
+      "1": "assets/step-1-xv1NaLY7.jpg",
+      "2": "assets/step-2--IyB6sM6.jpg",
+      "3": "assets/step-3-BU2Lk4ZB.jpg",
+      "4": "assets/step-4-HyzPZZfB.jpg",
+      "5": "assets/step-5-CEPLkz8m.jpg",
+      "6": "assets/step-6-zIyLPM3s.jpg"
+    }
+  },
+  "chicken-cutlets": {
+    "recept": {
+      "1": "assets/step-1-_qABeD0u.jpg",
+      "2": "assets/step-2-Dmdjkh2R.jpg",
+      "3": "assets/step-3-D8iEqZB-.jpg",
+      "4": "assets/step-4-hlWIi3xl.jpg"
+    }
+  },
+  "cottage-flatbread": {
+    "recept": {
+      "1": "assets/step-1-CgMyotLk.jpg",
+      "2": "assets/step-2-Bvo0rPh4.jpg",
+      "3": "assets/step-3-CH8fICS_.jpg",
+      "4": "assets/step-4-Nyf5Al8C.jpg"
+    }
+  },
+  "cottage-icecream": {
+    "recept": {
+      "1": "assets/step-1-B5qxB1SW.jpg",
+      "2": "assets/step-2-Df-u2n68.jpg",
+      "3": "assets/step-3-DJDN0ndm.jpg",
+      "4": "assets/step-4-DRJbNUEq.jpg",
+      "5": "assets/step-5-DQs3lVLm.jpg"
+    }
+  },
+  "egg-muffins": {
+    "recept": {
+      "1": "assets/step-1-C7oQS7BR.jpg",
+      "2": "assets/step-2-DvFxZsyA.jpg",
+      "3": "assets/step-3-Ct3J-TuS.jpg",
+      "4": "assets/step-4-foNL22gT.jpg",
+      "5": "assets/step-5-C4cu9m0h.jpg",
+      "6": "assets/step-6-lL0DLokE.jpg"
+    }
+  },
+  "egg-salad": {
+    "recept": {
+      "1": "assets/step-1-BBEnD7DA.jpg",
+      "2": "assets/step-2-CyA0_7s4.jpg",
+      "3": "assets/step-3-Bz4tYU5W.jpg"
+    }
+  },
+  "poke": {
+    "recept": {
+      "1": "assets/step-1-CIIRnj93.jpg",
+      "2": "assets/step-2-CxNqDzs8.jpg",
+      "3": "assets/step-3-B0dQ4YlM.jpg",
+      "5": "assets/step-5-Cwy_UqdB.jpg",
+      "6": "assets/step-6-BFXyXuat.jpg",
+      "7": "assets/step-7-BhnIyZ2y.jpg"
+    }
+  },
+  "pp-cheesecake": {
+    "recept": {
+      "1": "assets/step-1-J6VihBHC.jpg",
+      "2": "assets/step-2-Cb2KYj8E.jpg",
+      "3": "assets/step-3-DHYwjdDQ.jpg",
+      "4": "assets/step-4-CaXUcgPJ.jpg",
+      "5": "assets/step-5-DBHQVrCk.jpg"
+    }
+  },
+  "protein-bowl": {
+    "porciya": {
+      "1": "assets/step-1-8JY2gHWr.jpg",
+      "2": "assets/step-2-MOAnn604.jpg",
+      "3": "assets/step-3-BsgLmc2l.jpg",
+      "4": "assets/step-4--YKFww40.jpg",
+      "5": "assets/step-5-B3_Tf0H5.jpg",
+      "6": "assets/step-6-B1L_7-Gb.jpg"
+    },
+    "semeynyj": {
+      "1": "assets/step-1-CXWH_7sm.jpg",
+      "2": "assets/step-2-zZ9bFz1T.jpg",
+      "3": "assets/step-3-DFN0Cjdh.jpg"
+    }
+  },
+  "protein-pancakes": {
+    "recept": {
+      "1": "assets/step-1-FP_G4yIq.jpg",
+      "2": "assets/step-2-D2kBVY0O.jpg",
+      "3": "assets/step-3-Br21NTHT.jpg",
+      "4": "assets/step-4-Bj8qSrv_.jpg",
+      "5": "assets/step-5-DNTgG4eb.jpg",
+      "main": "assets/main-DNzGxcMc.jpg"
+    }
+  },
+  "protein-waffles": {
+    "recept": {
+      "1": "assets/step-1-CklHwjyt.jpg",
+      "2": "assets/step-2-C0izVZ2h.jpg",
+      "3": "assets/step-3-RR4PUHDv.jpg",
+      "4": "assets/step-4-nmxg2_TQ.jpg",
+      "main": "assets/main-Cfop-7_d.jpg"
+    }
+  },
+  "salmon-foil": {
+    "recept": {
+      "1": "assets/step-1-Ch7fvVkB.jpg",
+      "2": "assets/step-2-cYEbNYVE.jpg",
+      "3": "assets/step-3-0fK-jcuC.jpg",
+      "4": "assets/step-4-B_VC0sLA.jpg"
+    }
+  }
+}
