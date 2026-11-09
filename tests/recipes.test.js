@@ -22,9 +22,9 @@ test("all 12 original recipes and every nested field survive migration unchanged
   const original = vm.runInNewContext(
     `const fr=e=>({id:'recept',label:'Рецепт',hint:'',...e}); (${bundle.slice(start, end)})`,
   );
-  assert.deepEqual(recipes, JSON.parse(JSON.stringify(original)));
-  assert.equal(recipes.length, 12);
-  assert.equal(new Set(recipes.map((r) => r.slug)).size, 12);
+  assert.deepEqual(recipes.slice(0, original.length), JSON.parse(JSON.stringify(original)));
+  assert.equal(recipes.length, 13);
+  assert.equal(new Set(recipes.map((r) => r.slug)).size, 13);
 });
 
 test("every recipe cover and all 63 mapped photos exist in the deployable directory", () => {
@@ -64,8 +64,8 @@ test("search finds recipe ingredients in every variant and normalizes Russian ё
 });
 
 test("category and favorites filters compose with search without changing original ordering", () => {
-  assert.equal(filterRecipes(recipes, "breakfast", "", new Set()).length, 4);
-  assert.equal(filterRecipes(recipes, "dessert", "", new Set()).length, 4);
+  assert.equal(filterRecipes(recipes, "breakfast", "", new Set()).length, 5);
+  assert.equal(filterRecipes(recipes, "dessert", "", new Set()).length, 5);
   const saved = new Set(["salmon-foil", "protein-bowl"]);
   assert.deepEqual(
     filterRecipes(recipes, "favorites", "", saved).map((r) => r.slug),
@@ -109,4 +109,23 @@ test("recipe counter uses correct Russian plural forms", () => {
     "21 рецепт",
     "22 рецепта",
   ]);
+});
+
+
+test("banana bread separates the trial puree version from the original", () => {
+  const recipe = recipes.find((r) => r.slug === "banana-bread");
+  assert.ok(recipe);
+  assert.equal(recipe.variants.length, 2);
+  const [trial, original] = recipe.variants;
+  assert.match(trial.intro, /не проверенная автором/);
+  assert.equal(trial.ingredients.find((i) => i.name === "Сливочное масло").amount, "40 г");
+  assert.ok(trial.ingredients.some((i) => /яблочное пюре/.test(i.name) && i.amount === "45 г"));
+  assert.ok(!original.ingredients.some((i) => /яблочное пюре/.test(i.name)));
+  assert.match(original.ingredients.find((i) => i.name === "Сливочное масло").amount, /85 г/);
+  for (const v of recipe.variants) {
+    assert.equal(v.steps.length, 8);
+    assert.ok(v.links.every((l) => l.url.startsWith("https://")));
+    assert.equal(v.links.filter((l) => /market.yandex.ru/.test(l.url)).length, 1);
+  }
+  assert.ok(filterRecipes(recipes, "all", "яблочное пюре", new Set()).includes(recipe));
 });

@@ -2610,3 +2610,8 @@ button,
     font-size: 10px;
   }
 }
+
+/* Recipe references follow the existing ingredient-column treatment. */
+.recipe-resources { margin-top: 1.5rem; }
+.recipe-resources p { margin: 0 0 1rem; }
+.recipe-resources .source-link { overflow-wrap: anywhere; }
