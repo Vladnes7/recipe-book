@@ -23,8 +23,8 @@ test("all 12 original recipes and every nested field survive migration unchanged
     `const fr=e=>({id:'recept',label:'Рецепт',hint:'',...e}); (${bundle.slice(start, end)})`,
   );
   assert.deepEqual(recipes.slice(0, original.length), JSON.parse(JSON.stringify(original)));
-  assert.equal(recipes.length, 13);
-  assert.equal(new Set(recipes.map((r) => r.slug)).size, 13);
+  assert.equal(recipes.length, 14);
+  assert.equal(new Set(recipes.map((r) => r.slug)).size, 14);
 });
 
 test("every recipe cover and all 63 mapped photos exist in the deployable directory", () => {
@@ -65,7 +65,7 @@ test("search finds recipe ingredients in every variant and normalizes Russian ё
 
 test("category and favorites filters compose with search without changing original ordering", () => {
   assert.equal(filterRecipes(recipes, "breakfast", "", new Set()).length, 5);
-  assert.equal(filterRecipes(recipes, "dessert", "", new Set()).length, 5);
+  assert.equal(filterRecipes(recipes, "dessert", "", new Set()).length, 6);
   const saved = new Set(["salmon-foil", "protein-bowl"]);
   assert.deepEqual(
     filterRecipes(recipes, "favorites", "", saved).map((r) => r.slug),

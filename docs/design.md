@@ -75,3 +75,10 @@ sandy stone, warm late afternoon light; no text/logos.
 - Фото: https://www.ambitiouskitchen.com/wp-content/uploads/2020/03/Healthy-Banana-Bread-2.jpg ; источник — страница Monique Volz, фотография Eat Love Eats. Локальная оптимизированная копия recipes/banana-bread.jpg. Фото показывает оригинал автора, не адаптацию.
 - КБЖУ приблизительное, без необязательных добавок; оговорка показана в рецепте.
 - Копия в комнате обновляется теми же файлами public/recipe-book/.
+
+
+## Protein Cinnamon Rolls · 15 ноября 2026
+
+Добавлен оригинальный состав Arman Liew, The Big Man’s World: https://thebigmansworld.com/protein-cinnamon-rolls/ (обновление автора 22.11.2025). Шаги самостоятельно изложены по-русски; американские меры сохранены. В карточке явно отмечено несоответствие 197 ккал и БЖУ 20/10/25.
+
+Фото: https://thebigmansworld.com/wp-content/uploads/2024/03/protein-cinnamon-rolls.jpg — 1200 × 1800, локальная неизменённая копия recipes/protein-cinnamon-rolls.jpg. Условия https://thebigmansworld.com/privacy-policy/ разрешают фото со ссылкой и полным указанием источника. Атрибуция видна в рецепте. Существующие object-fit: cover, адаптивные пропорции контейнера и focus 50% 50% сохраняют изображение без растяжения.
