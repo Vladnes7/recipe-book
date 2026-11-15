@@ -372,7 +372,7 @@ async function loadBook() {
   try {
     const responses = await Promise.all(
       ["recipes", "step-photos"].map((name) =>
-        fetch(new URL(`../data/${name}.json`, import.meta.url)),
+        fetch(new URL(`../data/${name}.json`, import.meta.url), { cache: "no-cache" }),
       ),
     );
     if (responses.some((response) => !response.ok))
